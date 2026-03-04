@@ -65,6 +65,60 @@
             margin: 0 auto;
         }
         
+        .info-section {
+            background: #1e293b;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .info-section h2 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: #22d3ee;
+        }
+        
+        .info-section h3 {
+            font-size: 1rem;
+            margin: 20px 0 10px;
+            color: #e2e8f0;
+        }
+        
+        .info-section p {
+            color: #94a3b8;
+            margin-bottom: 10px;
+        }
+        
+        .info-section ul {
+            color: #94a3b8;
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .info-section li {
+            margin-bottom: 6px;
+        }
+        
+        .highlight-box {
+            background: rgba(34, 211, 238, 0.1);
+            border: 1px solid #22d3ee;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .highlight-box h4 {
+            color: #22d3ee;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+        
+        .highlight-box p {
+            color: #cbd5e1;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+        
         .loading {
             text-align: center;
             padding: 40px;
@@ -465,6 +519,8 @@
             <p>Invest equally in 4 categories. Keep fees low. Stay diversified. That's it — no complicated decisions, just consistent growth over time.</p>
         </div>
         
+        <!-- About section moved to tab - see "Why It Works" tab -->
+        
         <div id="loading" class="loading">
             <div class="loading-spinner"></div>
             <p>Loading live fund data...</p>
@@ -475,8 +531,39 @@
         </div>
         
         <div class="nav-tabs" id="nav-tabs" style="display:none;">
-            <button class="active" onclick="showTab('funds')">Recommended Funds</button>
-            <button onclick="showTab('calc')">Growth Calculator</button>
+            <button class="active" onclick="showTab('funds')">Funds</button>
+            <button onclick="showTab('calc')">Calculator</button>
+            <button onclick="showTab('about')">Why It Works</button>
+        </div>
+        
+        <!-- About Tab -->
+        <div id="about-tab" class="section">
+            <div class="info-section" style="margin-top: 0;">
+                <h2>💡 Why This Approach Works</h2>
+                
+                <h3>Diversification Smooths the Ride</h3>
+                <p>By spreading your money across 4 different categories, you reduce the impact when any one sector underperforms. In 2022, when tech crashed 30%, small cap and international helped balance out the losses.</p>
+                
+                <h3>Low Fees Matter More Than You Think</h3>
+                <p>A 0.5% fee might seem small, but over 30 years it can cost you tens of thousands of dollars. All our recommended funds have fees under 0.10%.</p>
+                
+                <div class="highlight-box">
+                    <h4>📊 Historical Performance</h4>
+                    <p>The FourFund portfolio has returned roughly 11-12% annually over the past 10 years. That's roughly $10,000 growing to $35,000 in 10 years with $500/month contributions.</p>
+                </div>
+                
+                <h3>Not Trying to Beat the Market</h3>
+                <p>We're not chasing the next hot stock. We're aiming for solid, consistent growth that beats most actively managed funds — after fees. The data shows most active managers <em>don't</em> beat the market over time.</p>
+                
+                <h3>Simple to Maintain</h3>
+                <p>Once you set it up:</p>
+                <ul>
+                    <li>Contribute the same amount monthly</li>
+                    <li>Rebalance once a year (optional)</li>
+                    <li>Don't check the news every day</li>
+                    <li>Stay the course for 20-30 years</li>
+                </ul>
+            </div>
         </div>
         
         <!-- Funds Tab -->

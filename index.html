@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FourFund - Simple Ramsey-Style Investing</title>
+    <title>FourFund - Simple Investment Portfolio</title>
     <style>
         * {
             margin: 0;
@@ -12,74 +12,86 @@
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            min-height: 100vh;
-            color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            line-height: 1.6;
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 900px;
             margin: 0 auto;
             padding: 20px;
         }
         
         header {
             text-align: center;
-            padding: 40px 0;
+            padding: 40px 0 30px;
         }
         
         h1 {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            background: linear-gradient(90deg, #00d4ff, #7c3aed);
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+        }
+        
+        h1 span {
+            background: linear-gradient(90deg, #22d3ee, #a78bfa);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
         
         .tagline {
             color: #94a3b8;
-            font-size: 1.2rem;
-            margin-bottom: 20px;
+            font-size: 1.1rem;
         }
         
-        .principle {
-            background: rgba(255,255,255,0.05);
-            padding: 20px;
-            border-radius: 12px;
+        .hero-box {
+            background: linear-gradient(135deg, #1e293b, #334155);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .hero-box h2 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #22d3ee;
+        }
+        
+        .hero-box p {
+            color: #cbd5e1;
             max-width: 600px;
             margin: 0 auto;
-            border: 1px solid rgba(255,255,255,0.1);
         }
         
-        .principle h3 {
-            color: #00d4ff;
-            margin-bottom: 10px;
-        }
-        
-        nav {
+        .nav-tabs {
             display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
             justify-content: center;
-            gap: 20px;
-            margin: 30px 0;
         }
         
-        nav button {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
+        .nav-tabs button {
+            background: #1e293b;
+            border: 1px solid #334155;
             color: #94a3b8;
-            padding: 12px 24px;
+            padding: 12px 30px;
             border-radius: 8px;
             cursor: pointer;
             font-size: 1rem;
             transition: all 0.2s;
         }
         
-        nav button:hover, nav button.active {
-            background: rgba(0,212,255,0.1);
-            border-color: #00d4ff;
-            color: #00d4ff;
+        .nav-tabs button:hover {
+            background: #334155;
+        }
+        
+        .nav-tabs button.active {
+            background: #22d3ee;
+            color: #0f172a;
+            border-color: #22d3ee;
+            font-weight: 600;
         }
         
         .section {
@@ -90,25 +102,18 @@
             display: block;
         }
         
-        .quadrant {
+        /* Fund Cards */
+        .fund-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 20px;
-            margin-top: 40px;
         }
         
-        .category {
-            background: rgba(255,255,255,0.03);
-            border-radius: 16px;
+        .category-card {
+            background: #1e293b;
+            border-radius: 12px;
             padding: 24px;
-            border: 1px solid rgba(255,255,255,0.08);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        
-        .category:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            border-color: rgba(0,212,255,0.3);
+            border: 1px solid #334155;
         }
         
         .category-header {
@@ -118,267 +123,268 @@
             margin-bottom: 20px;
         }
         
-        .category-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
+        .cat-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
-        }
-        
-        .large-cap .category-icon { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
-        .mid-cap .category-icon { background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
-        .small-cap .category-icon { background: linear-gradient(135deg, #06b6d4, #0891b2); }
-        .international .category-icon { background: linear-gradient(135deg, #f59e0b, #d97706); }
-        
-        .category h2 {
             font-size: 1.3rem;
-            color: #e2e8f0;
         }
         
-        .category h2 span {
-            font-size: 0.8rem;
-            color: #64748b;
-            font-weight: normal;
-        }
+        .cat-large .cat-icon { background: #3b82f6; }
+        .cat-mid .cat-icon { background: #8b5cf6; }
+        .cat-small .cat-icon { background: #06b6d4; }
+        .cat-intl .cat-icon { background: #f59e0b; }
         
-        .fund-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        
-        .fund {
-            background: rgba(255,255,255,0.05);
-            border-radius: 10px;
-            padding: 14px;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        
-        .fund:hover {
-            background: rgba(255,255,255,0.1);
-        }
-        
-        .fund.selected {
-            background: rgba(0,212,255,0.15);
-            border: 1px solid #00d4ff;
-        }
-        
-        .fund-rank {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 6px;
-        }
-        
-        .fund-ticker {
-            font-weight: bold;
-            color: #00d4ff;
+        .category-header h3 {
             font-size: 1.1rem;
         }
         
-        .fund-score {
-            background: linear-gradient(90deg, #7c3aed, #00d4ff);
-            padding: 4px 10px;
-            border-radius: 20px;
+        .category-header span {
+            display: block;
             font-size: 0.8rem;
-            font-weight: bold;
+            color: #64748b;
+        }
+        
+        .fund-item {
+            background: #0f172a;
+            border-radius: 8px;
+            padding: 14px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+        
+        .fund-item:hover {
+            border-color: #475569;
+        }
+        
+        .fund-item.selected {
+            border-color: #22d3ee;
+            background: rgba(34, 211, 238, 0.1);
+        }
+        
+        .fund-item.recommended {
+            border-color: #22c55e;
+        }
+        
+        .fund-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+        
+        .fund-ticker {
+            font-weight: 700;
+            color: #22d3ee;
+            font-size: 1.1rem;
         }
         
         .fund-name {
-            color: #94a3b8;
             font-size: 0.85rem;
+            color: #64748b;
             margin-bottom: 8px;
         }
         
         .fund-stats {
             display: flex;
-            gap: 16px;
-            font-size: 0.8rem;
+            gap: 20px;
+            font-size: 0.85rem;
         }
         
-        .stat {
-            display: flex;
-            flex-direction: column;
+        .fund-stats span {
+            color: #94a3b8;
         }
         
-        .stat-label {
-            color: #64748b;
-            font-size: 0.7rem;
-        }
-        
-        .stat-value {
+        .fund-stats strong {
             color: #22c55e;
-            font-weight: 600;
         }
         
-        .stat-value.expense {
-            color: #00d4ff;
+        .fund-stats .expense {
+            color: #22d3ee;
         }
         
-        .recommended {
-            border: 2px solid #00d4ff;
-            position: relative;
-        }
-        
-        .recommended::before {
-            content: "RECOMMENDED";
-            position: absolute;
-            top: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #00d4ff;
-            color: #000;
-            padding: 2px 12px;
-            border-radius: 20px;
+        .badge {
+            display: inline-block;
+            background: #22c55e;
+            color: #0f172a;
             font-size: 0.65rem;
-            font-weight: bold;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            margin-left: 8px;
         }
         
-        /* Calculator Styles */
-        .calculator {
-            background: rgba(255,255,255,0.03);
+        /* Calculator */
+        .calc-card {
+            background: #1e293b;
             border-radius: 16px;
-            padding: 30px;
-            margin-top: 40px;
-            border: 1px solid rgba(255,255,255,0.08);
+            padding: 40px;
+            max-width: 600px;
+            margin: 0 auto;
         }
         
-        .calculator h2 {
+        .calc-card h2 {
             text-align: center;
+            margin-bottom: 8px;
+        }
+        
+        .calc-subtitle {
+            text-align: center;
+            color: #64748b;
             margin-bottom: 30px;
-            color: #e2e8f0;
         }
         
-        .calc-grid {
+        .calc-inputs {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
+            gap: 20px;
         }
         
-        .calc-input {
+        .input-group {
             display: flex;
             flex-direction: column;
+            gap: 6px;
+        }
+        
+        .input-group label {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+        
+        .input-group input {
+            background: #0f172a;
+            border: 1px solid #334155;
+            color: #fff;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+        }
+        
+        .input-group input:focus {
+            outline: none;
+            border-color: #22d3ee;
+        }
+        
+        .avg-display {
+            text-align: center;
+            background: #0f172a;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .avg-display .label {
+            color: #64748b;
+            font-size: 0.85rem;
+        }
+        
+        .avg-display .value {
+            color: #22c55e;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .fund-picker {
+            background: #0f172a;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .fund-picker h4 {
+            color: #94a3b8;
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+        }
+        
+        .fund-chips {
+            display: flex;
+            flex-wrap: wrap;
             gap: 8px;
         }
         
-        .calc-input label {
+        .fund-chip {
+            background: #1e293b;
+            border: 1px solid #334155;
             color: #94a3b8;
-            font-size: 0.9rem;
-        }
-        
-        .calc-input input, .calc-input select {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: #fff;
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 1rem;
-        }
-        
-        .calc-input input:focus, .calc-input select:focus {
-            outline: none;
-            border-color: #00d4ff;
-        }
-        
-        .selected-funds {
-            margin-top: 30px;
-            padding: 20px;
-            background: rgba(0,0,0,0.2);
-            border-radius: 12px;
-        }
-        
-        .selected-funds h3 {
-            color: #94a3b8;
-            margin-bottom: 15px;
-            font-size: 0.9rem;
-        }
-        
-        .fund-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .fund-tag {
-            background: rgba(0,212,255,0.15);
-            border: 1px solid #00d4ff;
-            color: #00d4ff;
-            padding: 6px 14px;
+            padding: 8px 14px;
             border-radius: 20px;
-            font-size: 0.85rem;
             cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
         }
         
-        .fund-tag:hover {
-            background: rgba(0,212,255,0.25);
+        .fund-chip:hover {
+            border-color: #475569;
         }
         
-        .calculate-btn {
-            display: block;
+        .fund-chip.selected {
+            background: #22d3ee;
+            color: #0f172a;
+            border-color: #22d3ee;
+        }
+        
+        .calc-btn {
             width: 100%;
-            max-width: 300px;
-            margin: 30px auto 0;
-            background: linear-gradient(90deg, #7c3aed, #00d4ff);
+            background: linear-gradient(90deg, #22d3ee, #a78bfa);
             border: none;
-            color: #fff;
-            padding: 14px 28px;
+            color: #0f172a;
+            padding: 16px;
             border-radius: 8px;
             font-size: 1.1rem;
-            font-weight: bold;
+            font-weight: 700;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.2s;
         }
         
-        .calculate-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0,212,255,0.3);
+        .calc-btn:hover {
+            transform: scale(1.02);
         }
         
-        .results {
+        .results-box {
             margin-top: 30px;
             display: none;
         }
         
-        .results.show {
+        .results-box.show {
             display: block;
         }
         
-        .result-card {
-            background: rgba(0,212,255,0.1);
-            border: 1px solid #00d4ff;
+        .results-main {
+            background: linear-gradient(135deg, rgba(34, 211, 238, 0.2), rgba(167, 139, 250, 0.2));
+            border: 1px solid #22d3ee;
             border-radius: 12px;
-            padding: 24px;
+            padding: 30px;
             text-align: center;
         }
         
-        .result-card h4 {
+        .results-main .label {
             color: #94a3b8;
-            font-size: 0.9rem;
-            margin-bottom: 10px;
+            font-size: 0.95rem;
         }
         
-        .result-value {
+        .results-main .value {
             font-size: 2.5rem;
-            font-weight: bold;
-            background: linear-gradient(90deg, #00d4ff, #22c55e);
+            font-weight: 700;
+            background: linear-gradient(90deg, #22d3ee, #22c55e);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
+            margin: 10px 0;
         }
         
-        .result-breakdown {
-            margin-top: 20px;
+        .results-breakdown {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 15px;
+            margin-top: 20px;
         }
         
         .breakdown-item {
-            background: rgba(255,255,255,0.05);
+            background: #0f172a;
             padding: 15px;
             border-radius: 8px;
             text-align: center;
@@ -386,116 +392,157 @@
         
         .breakdown-item .label {
             color: #64748b;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
         }
         
         .breakdown-item .value {
             color: #e2e8f0;
             font-weight: 600;
-            margin-top: 5px;
-        }
-        
-        .avg-return {
-            text-align: center;
-            color: #94a3b8;
-            margin-bottom: 20px;
-            font-size: 0.9rem;
-        }
-        
-        .avg-return span {
-            color: #22c55e;
-            font-weight: bold;
+            margin-top: 4px;
         }
         
         footer {
             text-align: center;
             padding: 40px;
-            color: #64748b;
-            font-size: 0.9rem;
+            color: #475569;
+            font-size: 0.85rem;
         }
         
         .disclaimer {
-            background: rgba(255,255,255,0.03);
+            background: #1e293b;
             padding: 20px;
             border-radius: 12px;
-            margin-top: 40px;
+            margin-top: 30px;
             font-size: 0.8rem;
             color: #64748b;
             line-height: 1.6;
         }
         
-        @media (max-width: 768px) {
-            h1 { font-size: 2rem; }
-            .quadrant { grid-template-columns: 1fr; }
+        @media (max-width: 600px) {
+            .results-breakdown {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>FourFund</h1>
-            <p class="tagline">Simple, Ramsey-Style Investment Portfolio</p>
-            <div class="principle">
-                <h3>🎯 The Four-Fund Strategy</h3>
-                <p>Invest 25% in each category for diversification. All funds are no-load with low expense ratios.</p>
-            </div>
+            <h1><span>FourFund</span></h1>
+            <p class="tagline">Simple 4-Fund Portfolio for Long-Term Investing</p>
         </header>
         
-        <nav>
-            <button class="active" onclick="showSection('funds')">Recommended Funds</button>
-            <button onclick="showSection('calculator')">Portfolio Calculator</button>
-        </nav>
-        
-        <!-- Funds Section -->
-        <div id="funds-section" class="section active">
-            <div class="quadrant" id="funds"></div>
+        <div class="hero-box">
+            <h2>🎯 The Simple Strategy</h2>
+            <p>Invest equally in 4 categories. Keep fees low. Stay diversified. That's it — no complicated decisions, just consistent growth over time.</p>
         </div>
         
-        <!-- Calculator Section -->
-        <div id="calculator-section" class="section">
-            <div class="calculator">
-                <h2>📊 Portfolio Growth Calculator</h2>
-                <p class="avg-return">Average historical return: <span id="avg-return">--</span>%</p>
-                
-                <div class="calc-grid">
-                    <div class="calc-input">
-                        <label>Monthly Contribution ($)</label>
-                        <input type="number" id="monthly" value="500" min="0" step="50">
+        <div class="nav-tabs">
+            <button class="active" onclick="showTab('funds')">Recommended Funds</button>
+            <button onclick="showTab('calc')">Growth Calculator</button>
+        </div>
+        
+        <!-- Funds Tab -->
+        <div id="funds-tab" class="section active">
+            <div class="fund-grid">
+                <div class="category-card cat-large">
+                    <div class="category-header">
+                        <div class="cat-icon">📈</div>
+                        <div>
+                            <h3>Large Cap</h3>
+                            <span>Big, established companies</span>
+                        </div>
                     </div>
-                    <div class="calc-input">
-                        <label>Investment Period (years)</label>
+                    <div id="large-list"></div>
+                </div>
+                
+                <div class="category-card cat-mid">
+                    <div class="category-header">
+                        <div class="cat-icon">📊</div>
+                        <div>
+                            <h3>Mid Cap</h3>
+                            <span>Medium-sized growth companies</span>
+                        </div>
+                    </div>
+                    <div id="mid-list"></div>
+                </div>
+                
+                <div class="category-card cat-small">
+                    <div class="category-header">
+                        <div class="cat-icon">🚀</div>
+                        <div>
+                            <h3>Small Cap</h3>
+                            <span>High-growth smaller companies</span>
+                        </div>
+                    </div>
+                    <div id="small-list"></div>
+                </div>
+                
+                <div class="category-card cat-intl">
+                    <div class="category-header">
+                        <div class="cat-icon">🌍</div>
+                        <div>
+                            <h3>International</h3>
+                            <span>Stocks outside the US</span>
+                        </div>
+                    </div>
+                    <div id="intl-list"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Calculator Tab -->
+        <div id="calc-tab" class="section">
+            <div class="calc-card">
+                <h2>📈 Portfolio Growth Calculator</h2>
+                <p class="calc-subtitle">See how your money could grow with these funds</p>
+                
+                <div class="calc-inputs">
+                    <div class="input-group">
+                        <label>Monthly Investment ($)</label>
+                        <input type="number" id="monthly" value="500" min="0">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Years to Invest</label>
                         <input type="number" id="years" value="20" min="1" max="50">
                     </div>
-                    <div class="calc-input">
+                    
+                    <div class="input-group">
                         <label>Starting Amount ($)</label>
                         <input type="number" id="initial" value="0" min="0">
                     </div>
                 </div>
                 
-                <div class="selected-funds">
-                    <h3>Select 4 funds (one from each category):</h3>
-                    <div class="fund-tags" id="fund-selector"></div>
+                <div class="avg-display">
+                    <div class="label">Average Historical Return</div>
+                    <div class="value" id="avg-return">11.5%</div>
                 </div>
                 
-                <button class="calculate-btn" onclick="calculate()">Calculate Growth</button>
+                <div class="fund-picker">
+                    <h4>Pick one fund from each category:</h4>
+                    <div id="chip-container"></div>
+                </div>
                 
-                <div class="results" id="results">
-                    <div class="result-card">
-                        <h4>Total Portfolio Value</h4>
-                        <div class="result-value" id="total-value">$0</div>
+                <button class="calc-btn" onclick="calculate()">Calculate Growth</button>
+                
+                <div class="results-box" id="results">
+                    <div class="results-main">
+                        <div class="label">Your Portfolio Could Be Worth</div>
+                        <div class="value" id="final-value">$0</div>
                     </div>
-                    <div class="result-breakdown">
+                    <div class="results-breakdown">
                         <div class="breakdown-item">
-                            <div class="label">Total Contributed</div>
-                            <div class="value" id="total-contributed">$0</div>
+                            <div class="label">Money You Put In</div>
+                            <div class="value" id="contributed">$0</div>
                         </div>
                         <div class="breakdown-item">
                             <div class="label">Investment Growth</div>
-                            <div class="value" id="total-growth">$0</div>
+                            <div class="value" id="growth">$0</div>
                         </div>
                         <div class="breakdown-item">
-                            <div class="label">Fees Paid (est.)</div>
-                            <div class="value" id="fees-paid">$0</div>
+                            <div class="label">Lost to Fees (est.)</div>
+                            <div class="value" id="fees">$0</div>
                         </div>
                     </div>
                 </div>
@@ -503,166 +550,146 @@
         </div>
         
         <div class="disclaimer">
-            <strong>Disclaimer:</strong> This is for educational purposes only and does not constitute financial advice. 
-            Past performance doesn't guarantee future results. Always consult a financial professional before investing.
-            Data sourced from Yahoo Finance. Expense ratios may vary — verify before purchasing.
+            <strong>Note:</strong> This is for educational purposes only. Past performance doesn't guarantee future results. 
+            Always consult a financial professional before investing. Data based on 10-year historical returns.
         </div>
         
         <footer>
-            <p>FourFund — Helping investors make smarter decisions</p>
+            FourFund — Simple investing for everyone
         </footer>
     </div>
     
     <script>
-        const fundData = {
-            "Large Cap Growth": [
-                { ticker: "VOO", name: "Vanguard S&P 500", expense_percent: 0.03, ten_year: 305.8, score: 67.0 },
-                { ticker: "SPYG", name: "SPDR Portfolio S&P 500 Growth", expense_percent: 0.09, ten_year: 381.1, score: 60.5 },
-                { ticker: "VGT", name: "Vanguard Info Tech", expense_percent: 0.10, ten_year: 673.9, score: 60.0 },
-                { ticker: "IVW", name: "iShares S&P 500 Growth", expense_percent: 0.10, ten_year: 375.6, score: 59.6 }
+        const funds = {
+            large: [
+                { ticker: 'VOO', name: 'Vanguard S&P 500', expense: 0.03, return: 305.8 },
+                { ticker: 'SPYG', name: 'SPDR Growth', expense: 0.09, return: 381.1 },
+                { ticker: 'VGT', name: 'Vanguard Tech', expense: 0.10, return: 673.9 },
+                { ticker: 'IVW', name: 'iShares Growth', expense: 0.10, return: 375.6 }
             ],
-            "Mid Cap": [
-                { ticker: "VO", name: "Vanguard Mid-Cap ETF", expense_percent: 0.04, ten_year: 200.4, score: 66.0 },
-                { ticker: "VOT", name: "Vanguard Mid-Cap Growth", expense_percent: 0.04, ten_year: 207.1, score: 66.0 },
-                { ticker: "IJH", name: "iShares Core S&P Mid-Cap", expense_percent: 0.05, ten_year: 193.4, score: 65.0 },
-                { ticker: "MDY", name: "SPDR S&P MidCap 400", expense_percent: 0.09, ten_year: 186.3, score: 60.5 }
+            mid: [
+                { ticker: 'VO', name: 'Vanguard Mid-Cap', expense: 0.04, return: 200.4 },
+                { ticker: 'VOT', name: 'Vanguard Mid Growth', expense: 0.04, return: 207.1 },
+                { ticker: 'IJH', name: 'iShares Mid-Cap', expense: 0.05, return: 193.4 },
+                { ticker: 'MDY', name: 'SPDR MidCap', expense: 0.09, return: 186.3 }
             ],
-            "Small Cap": [
-                { ticker: "VB", name: "Vanguard Small-Cap ETF", expense_percent: 0.05, ten_year: 192.2, score: 65.0 },
-                { ticker: "SCHA", name: "Schwab US Small-Cap", expense_percent: 0.05, ten_year: 173.7, score: 65.0 },
-                { ticker: "IJR", name: "iShares Core S&P Small-Cap", expense_percent: 0.06, ten_year: 173.5, score: 64.0 },
-                { ticker: "IWM", name: "iShares Russell 2000", expense_percent: 0.19, ten_year: 173.6, score: 51.0 }
+            small: [
+                { ticker: 'VB', name: 'Vanguard Small-Cap', expense: 0.05, return: 192.2 },
+                { ticker: 'SCHA', name: 'Schwab Small-Cap', expense: 0.05, return: 173.7 },
+                { ticker: 'IJR', name: 'iShares Small-Cap', expense: 0.06, return: 173.5 },
+                { ticker: 'IWM', name: 'Russell 2000', expense: 0.19, return: 173.6 }
             ],
-            "International": [
-                { ticker: "SPDW", name: "SPDR MSCI World exUS", expense_percent: 0.04, ten_year: 157.8, score: 66.0 },
-                { ticker: "VEA", name: "Vanguard FTSE Developed Markets", expense_percent: 0.05, ten_year: 159.2, score: 65.0 },
-                { ticker: "SCHF", name: "Schwab Intl Equity ETF", expense_percent: 0.06, ten_year: 160.4, score: 64.0 },
-                { ticker: "VXUS", name: "Vanguard Total Intl Stock", expense_percent: 0.07, ten_year: 147.4, score: 63.0 }
+            intl: [
+                { ticker: 'SPDW', name: 'SPDR World ex-US', expense: 0.04, return: 157.8 },
+                { ticker: 'VEA', name: 'Vanguard Developed', expense: 0.05, return: 159.2 },
+                { ticker: 'SCHF', name: 'Schwab Intl', expense: 0.06, return: 160.4 },
+                { ticker: 'VXUS', name: 'Vanguard Total Intl', expense: 0.07, return: 147.4 }
             ]
         };
         
-        const categoryInfo = {
-            "Large Cap Growth": { icon: "📈", class: "large-cap", desc: "Large, established companies" },
-            "Mid Cap": { icon: "📊", class: "mid-cap", desc: "Medium-sized growing companies" },
-            "Small Cap": { icon: "🚀", class: "small-cap", desc: "Small, high-growth companies" },
-            "International": { icon: "🌍", class: "international", desc: "Stocks outside the US" }
-        };
+        let selected = { large: 'VOO', mid: 'VO', small: 'VB', intl: 'SPDW' };
         
-        let selectedFunds = [];
-        
-        function showSection(section) {
+        function showTab(tab) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-            document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-            document.getElementById(section + '-section').classList.add('active');
+            document.querySelectorAll('.nav-tabs button').forEach(b => b.classList.remove('active'));
+            document.getElementById(tab + '-tab').classList.add('active');
             event.target.classList.add('active');
         }
         
         function renderFunds() {
-            const container = document.getElementById('funds');
-            let html = '';
-            
-            for (const [category, funds] of Object.entries(fundData)) {
-                const info = categoryInfo[category];
-                
-                html += `
-                    <div class="category ${info.class}">
-                        <div class="category-header">
-                            <div class="category-icon">${info.icon}</div>
-                            <div>
-                                <h2>${category} <span>— ${info.desc}</span></h2>
-                            </div>
-                        </div>
-                        <div class="fund-list">
-                            ${funds.map((fund, i) => `
-                                <div class="fund ${i === 0 ? 'recommended' : ''}" onclick="selectFund('${fund.ticker}', '${category}')">
-                                    <div class="fund-rank">
-                                        <span class="fund-ticker">${fund.ticker}</span>
-                                        <span class="fund-score">${fund.score}</span>
-                                    </div>
-                                    <div class="fund-name">${fund.name}</div>
-                                    <div class="fund-stats">
-                                        <div class="stat">
-                                            <span class="stat-label">Expense</span>
-                                            <span class="stat-value expense">${fund.expense_percent}%</span>
-                                        </div>
-                                        <div class="stat">
-                                            <span class="stat-label">10Y Return</span>
-                                            <span class="stat-value">${fund.ten_year}%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            `).join('')}
-                        </div>
+            // Large Cap
+            document.getElementById('large-list').innerHTML = funds.large.map(f => `
+                <div class="fund-item ${f.ticker === 'VOO' ? 'recommended' : ''}" onclick="selectFund('large', '${f.ticker}')">
+                    <div class="fund-top">
+                        <span class="fund-ticker">${f.ticker}</span>
+                        ${f.ticker === 'VOO' ? '<span class="badge">TOP PICK</span>' : ''}
                     </div>
-                `;
-            }
+                    <div class="fund-name">${f.name}</div>
+                    <div class="fund-stats">
+                        <span>Fee: <strong class="expense">${f.expense}%</strong></span>
+                        <span>10Y: <strong>${f.return}%</strong></span>
+                    </div>
+                </div>
+            `).join('');
             
-            container.innerHTML = html;
-            renderFundSelector();
+            // Mid Cap
+            document.getElementById('mid-list').innerHTML = funds.mid.map(f => `
+                <div class="fund-item ${f.ticker === 'VO' ? 'recommended' : ''}" onclick="selectFund('mid', '${f.ticker}')">
+                    <div class="fund-top">
+                        <span class="fund-ticker">${f.ticker}</span>
+                        ${f.ticker === 'VO' ? '<span class="badge">TOP PICK</span>' : ''}
+                    </div>
+                    <div class="fund-name">${f.name}</div>
+                    <div class="fund-stats">
+                        <span>Fee: <strong class="expense">${f.expense}%</strong></span>
+                        <span>10Y: <strong>${f.return}%</strong></span>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Small Cap
+            document.getElementById('small-list').innerHTML = funds.small.map(f => `
+                <div class="fund-item ${f.ticker === 'VB' ? 'recommended' : ''}" onclick="selectFund('small', '${f.ticker}')">
+                    <div class="fund-top">
+                        <span class="fund-ticker">${f.ticker}</span>
+                        ${f.ticker === 'VB' ? '<span class="badge">TOP PICK</span>' : ''}
+                    </div>
+                    <div class="fund-name">${f.name}</div>
+                    <div class="fund-stats">
+                        <span>Fee: <strong class="expense">${f.expense}%</strong></span>
+                        <span>10Y: <strong>${f.return}%</strong></span>
+                    </div>
+                </div>
+            `).join('');
+            
+            // International
+            document.getElementById('intl-list').innerHTML = funds.intl.map(f => `
+                <div class="fund-item ${f.ticker === 'SPDW' ? 'recommended' : ''}" onclick="selectFund('intl', '${f.ticker}')">
+                    <div class="fund-top">
+                        <span class="fund-ticker">${f.ticker}</span>
+                        ${f.ticker === 'SPDW' ? '<span class="badge">TOP PICK</span>' : ''}
+                    </div>
+                    <div class="fund-name">${f.name}</div>
+                    <div class="fund-stats">
+                        <span>Fee: <strong class="expense">${f.expense}%</strong></span>
+                        <span>10Y: <strong>${f.return}%</strong></span>
+                    </div>
+                </div>
+            `).join('');
+            
+            renderChips();
         }
         
-        function renderFundSelector() {
-            const container = document.getElementById('fund-selector');
+        function renderChips() {
             let html = '';
-            
-            for (const [category, funds] of Object.entries(fundData)) {
-                html += `<div style="width:100%; margin-bottom:10px; color:#64748b; font-size:0.8rem;">${category}:</div>`;
-                html += funds.map(f => `
-                    <div class="fund-tag ${selectedFunds.includes(f.ticker) ? 'selected' : ''}" 
-                         onclick="toggleFund('${f.ticker}', '${category}')">
-                        ${f.ticker}
-                    </div>
+            for (const [cat, fundList] of Object.entries(funds)) {
+                const catName = cat === 'large' ? 'Large Cap' : cat === 'mid' ? 'Mid Cap' : cat === 'small' ? 'Small Cap' : 'International';
+                html += `<div style="width:100%; margin:15px 0 8px; color:#64748b; font-size:0.8rem;">${catName}</div>`;
+                html += '<div class="fund-chips">';
+                html += fundList.map(f => `
+                    <span class="fund-chip ${selected[cat] === f.ticker ? 'selected' : ''}" 
+                          onclick="selectFund('${cat}', '${f.ticker}')">${f.ticker}</span>
                 `).join('');
+                html += '</div>';
             }
-            
-            container.innerHTML = html;
-            updateAvgReturn();
+            document.getElementById('chip-container').innerHTML = html;
+            updateAvg();
         }
         
-        function toggleFund(ticker, category) {
-            // Remove any existing fund from this category
-            const categoryOfTicker = Object.entries(fundData).find(([cat, funds]) => 
-                funds.some(f => f.ticker === ticker)
-            )[0];
-            
-            // Remove funds from this category
-            selectedFunds = selectedFunds.filter(t => {
-                const cat = Object.entries(fundData).find(([cat, funds]) => 
-                    funds.some(f => f.ticker === t)
-                );
-                return cat && cat[0] !== categoryOfTicker;
-            });
-            
-            // Add new selection
-            if (!selectedFunds.includes(ticker)) {
-                selectedFunds.push(ticker);
-            }
-            
-            renderFundSelector();
+        function selectFund(cat, ticker) {
+            selected[cat] = ticker;
+            renderFunds();
         }
         
-        function selectFund(ticker, category) {
-            toggleFund(ticker, category);
-        }
-        
-        function getSelectedFundData() {
-            return selectedFunds.map(ticker => {
-                for (const funds of Object.values(fundData)) {
-                    const fund = funds.find(f => f.ticker === ticker);
-                    if (fund) return fund;
-                }
-                return null;
-            }).filter(f => f);
-        }
-        
-        function updateAvgReturn() {
-            const funds = getSelectedFundData();
-            if (funds.length > 0) {
-                const avgReturn = funds.reduce((sum, f) => sum + f.ten_year, 0) / funds.length;
-                document.getElementById('avg-return').textContent = avgReturn.toFixed(1);
-            } else {
-                document.getElementById('avg-return').textContent = '--';
-            }
+        function updateAvg() {
+            const selectedFunds = [
+                funds.large.find(f => f.ticker === selected.large),
+                funds.mid.find(f => f.ticker === selected.mid),
+                funds.small.find(f => f.ticker === selected.small),
+                funds.intl.find(f => f.ticker === selected.intl)
+            ];
+            const avgReturn = selectedFunds.reduce((sum, f) => sum + f.return, 0) / 4;
+            document.getElementById('avg-return').textContent = avgReturn.toFixed(1) + '%';
         }
         
         function calculate() {
@@ -670,55 +697,44 @@
             const years = parseFloat(document.getElementById('years').value) || 1;
             const initial = parseFloat(document.getElementById('initial').value) || 0;
             
-            const funds = getSelectedFundData();
-            if (funds.length === 0) {
-                alert('Please select at least one fund');
-                return;
-            }
+            const selectedFunds = [
+                funds.large.find(f => f.ticker === selected.large),
+                funds.mid.find(f => f.ticker === selected.mid),
+                funds.small.find(f => f.ticker === selected.small),
+                funds.intl.find(f => f.ticker === selected.intl)
+            ];
             
-            // Calculate average return and expense ratio
-            const avgReturn = funds.reduce((sum, f) => sum + f.ten_year, 0) / funds.length;
-            const avgExpense = funds.reduce((sum, f) => sum + f.expense_percent, 0) / funds.length;
+            const avgReturn = selectedFunds.reduce((sum, f) => sum + f.return, 0) / 4;
+            const avgExpense = selectedFunds.reduce((sum, f) => sum + f.expense, 0) / 4;
             
-            // Convert 10-year return to annual return
+            // Annual return from 10-year total
             const annualReturn = Math.pow(1 + avgReturn / 100, 1/10) - 1;
-            const annualExpense = avgExpense / 100;
-            const netReturn = annualReturn - annualExpense;
+            const netReturn = annualReturn - (avgExpense / 100);
             
-            // Calculate future value
+            // Calculate
             const months = years * 12;
             let total = initial;
-            let totalContributed = initial;
+            let noFee = initial;
             
             for (let i = 0; i < months; i++) {
                 total = total * (1 + netReturn / 12) + monthly;
-                totalContributed += monthly;
+                noFee = noFee * (1 + annualReturn / 12) + monthly;
             }
             
-            // Calculate what it would be without fees (for comparison)
-            let totalWithoutFees = initial;
-            for (let i = 0; i < months; i++) {
-                totalWithoutFees = totalWithoutFees * (1 + annualReturn / 12) + monthly;
-            }
+            const contributed = initial + (monthly * years);
+            const growth = total - contributed;
+            const fees = noFee - total;
             
-            const feesPaid = totalWithoutFees - total;
-            const growth = total - totalContributed;
-            
-            // Display results
-            document.getElementById('total-value').textContent = '$' + Math.round(total).toLocaleString();
-            document.getElementById('total-contributed').textContent = '$' + Math.round(totalContributed).toLocaleString();
-            document.getElementById('total-growth').textContent = '$' + Math.round(growth).toLocaleString();
-            document.getElementById('fees-paid').textContent = '$' + Math.round(feesPaid).toLocaleString();
+            document.getElementById('final-value').textContent = '$' + Math.round(total).toLocaleString();
+            document.getElementById('contributed').textContent = '$' + Math.round(contributed).toLocaleString();
+            document.getElementById('growth').textContent = '$' + Math.round(growth).toLocaleString();
+            document.getElementById('fees').textContent = '$' + Math.round(fees).toLocaleString();
             
             document.getElementById('results').classList.add('show');
         }
         
-        // Initialize with default selection (first fund from each category)
-        selectedFunds = ['VOO', 'VO', 'VB', 'SPDW'];
-        
         // Initialize
         renderFunds();
-        updateAvgReturn();
     </script>
 </body>
 </html>

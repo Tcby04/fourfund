@@ -809,7 +809,7 @@
             // Large Cap
             document.getElementById('large-list').innerHTML = fundDefs.large.map(f => {
                 const data = fundData[f.ticker];
-                const return10y = data ? data.return.toFixed(1) : '--';
+                const return10y = data ? data.return.toFixed(1) : (f.fallbackReturn ? f.fallbackReturn.toFixed(1) : '--');
                 const isRecommended = f.ticker === 'VOO';
                 return `
                     <div class="fund-item ${isRecommended ? 'recommended' : ''}" onclick="selectFund('large', '${f.ticker}')">
@@ -829,7 +829,7 @@
             // Mid Cap
             document.getElementById('mid-list').innerHTML = fundDefs.mid.map(f => {
                 const data = fundData[f.ticker];
-                const return10y = data ? data.return.toFixed(1) : '--';
+                const return10y = data ? data.return.toFixed(1) : (f.fallbackReturn ? f.fallbackReturn.toFixed(1) : '--');
                 const isRecommended = f.ticker === 'VO';
                 return `
                     <div class="fund-item ${isRecommended ? 'recommended' : ''}" onclick="selectFund('mid', '${f.ticker}')">
@@ -849,7 +849,7 @@
             // Small Cap
             document.getElementById('small-list').innerHTML = fundDefs.small.map(f => {
                 const data = fundData[f.ticker];
-                const return10y = data ? data.return.toFixed(1) : '--';
+                const return10y = data ? data.return.toFixed(1) : (f.fallbackReturn ? f.fallbackReturn.toFixed(1) : '--');
                 const isRecommended = f.ticker === 'VB';
                 return `
                     <div class="fund-item ${isRecommended ? 'recommended' : ''}" onclick="selectFund('small', '${f.ticker}')">
@@ -869,7 +869,7 @@
             // International
             document.getElementById('intl-list').innerHTML = fundDefs.intl.map(f => {
                 const data = fundData[f.ticker];
-                const return10y = data ? data.return.toFixed(1) : '--';
+                const return10y = data ? data.return.toFixed(1) : (f.fallbackReturn ? f.fallbackReturn.toFixed(1) : '--');
                 const isRecommended = f.ticker === 'SPDW';
                 return `
                     <div class="fund-item ${isRecommended ? 'recommended' : ''}" onclick="selectFund('intl', '${f.ticker}')">
